@@ -8,9 +8,11 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:name=".PlayCatalogApplication">
+        <!--
         <activity
-            android:name=".PlaysActivity"
+            android:name=".ui.plays.PlaysActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -19,6 +21,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        -->
+        <!-- Main Activity-->
+        <activity android:name=".ui.games.GameActivity" >
+            <intent-filter>
+                <!-- MAIN represents that it is the Main Activity-->
+                <action android:name="android.intent.action.MAIN" />
+                <!-- Launcher Denotes that it will be the first launching activity-->
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.plays.PlaysActivity" />
+        <activity android:name=".ui.playentry.PlayEntryActivity" />
     </application>
 
 </manifest>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="hu.bme.aut.android.playcatalog.PlaysActivity"
+    tools:context="hu.bme.aut.android.playcatalog.PlayCatalogApplication"
     tools:showIn="@layout/app_bar_plays">
 
     <TextView
