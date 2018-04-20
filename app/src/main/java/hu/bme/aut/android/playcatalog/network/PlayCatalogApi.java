@@ -1,9 +1,9 @@
 package hu.bme.aut.android.playcatalog.network;
 
-import hu.bme.aut.android.playcatalog.dto.GameDto;
-import hu.bme.aut.android.playcatalog.dto.PlayDto;
+import java.util.List;
+
+import hu.bme.aut.android.playcatalog.model.Play;
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -12,31 +12,58 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface PlayCatalogApi {
-    // Get remote changes
-    @GET("user/{userId}/changes")
-    Call<Response> getRemoteChanges(@Path("userId") Long userId);
+    /**
+     * Get changes since last synch.
+     *
+     * @param userId User id
+     * @return Call<List<Play>>
+     */
 
-    // Send new local play
-    @POST("user/{userId}/plays/new")
-    Call<Response> sendNewPlay(@Path("userId") Long userId, @Body PlayDto play);
+    @GET("changes")
+    Call<List<Play>> getRemoteChanges(
+            @Path("userId") Long userId
+    );
 
-    // Send local play change
-    @PUT("user/{userId}/plays/{playId}")
-    Call<Response> sendPlayChange(@Path("userId") Long userId, @Path("playId") Long playId, @Body PlayDto play);
 
-    // Send local play deletion
-    @DELETE("user/{userId}/plays/{playId}")
-    Call<Response> sendPlayerDeletion(@Path("userId") Long userId, @Path("playId") Long playId);
+    /**
+     * Create Play.
+     *
+     * @param userId User id
+     * @param play Play object
+     * @return Call<Play>
+     */
 
-    // Send new local game
-    @POST("user/{userId}/games/new")
-    Call<Response> sendNewGame(@Path("userId") Long userId, @Body GameDto game);
+    @POST("plays")
+    Call<Play> createPlay(
+            @Path("userId") Long userId, @Body Play play
+    );
 
-    // Send local game change
-    @PUT("user/{userId}/games/{gameId}")
-    Call<Response> sendGameChange(@Path("userId") Long userId, @Path("gameId") Long playId, @Body GameDto game);
 
-    // Send local game deletion
-    @DELETE("user/{userId}/games/{gameId}")
-    Call<Response> sendGameDeletion(@Path("userId") Long userId, @Path("gameId") Long playId);
+    /**
+     * Edit Play.
+     *
+     * @param userId User id
+     * @param playId Id of Play
+     * @param play The edited Play object
+     * @return Call<Play>
+     */
+
+    @PUT("plays/{playId}")
+    Call<Play> editPlay(
+            @Path("userId") Long userId, @Path("playId") Long playId, @Body Play play
+    );
+
+
+    /**
+     * Delete Play.
+     *
+     * @param userId User id
+     * @param playId Play id
+     * @return Call<Void>
+     */
+
+    @DELETE("plays/{playId}")
+    Call<Void> deletePlay(
+            @Path("userId") Long userId, @Path("playId") Long playId
+    );
 }

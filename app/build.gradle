@@ -38,8 +38,8 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
 
     // Dagger 2 and Compiler
-    compile 'com.google.dagger:dagger:2.8'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
+    compile 'com.google.dagger:dagger:2.11'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'
 
     // Room (use 1.1.0-beta2 for latest beta)
     implementation "android.arch.persistence.room:runtime:1.0.0"
@@ -51,6 +51,8 @@ dependencies {
     // Test helpers for Room
     testImplementation "android.arch.persistence.room:testing:1.0.0"
 
+    // Swagger
+    compile group: 'io.swagger', name: 'swagger-core', version: '1.5.10'
 
     // Retrofit
     compile 'com.squareup.retrofit2:retrofit:2.4.0'

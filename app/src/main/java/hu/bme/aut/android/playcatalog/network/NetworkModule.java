@@ -4,6 +4,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import hu.bme.aut.android.playcatalog.util.GsonHelper;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -11,10 +13,25 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class NetworkModule {
     @Provides
     @Singleton
-    public Retrofit provideRetrofit() {
+    public OkHttpClient.Builder provideOkHttpClientBuilder() {
+        return new OkHttpClient().newBuilder();
+    }
+
+
+    @Provides
+    @Singleton
+    public OkHttpClient provideOkHttpClient(OkHttpClient.Builder builder) {
+        return builder.build();
+    }
+
+    @Provides
+    @Singleton
+    public Retrofit provideRetrofit(OkHttpClient client) {
         return new Retrofit.Builder()
                 .baseUrl(NetworkConfig.ENDPOINT_ADDRESS)
-                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .addConverterFactory(
+                        GsonConverterFactory.create(GsonHelper.getGson()))
                 .build();
     }
 

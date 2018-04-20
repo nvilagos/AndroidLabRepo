@@ -1,0 +1,269 @@
+swagger: '3.0.1'
+info:
+  version: 1.0.0
+  title: Play Catalog Application
+basePath: /api
+consumes:
+  - application/json
+  - application/x-www-form-urlencoded
+  - application/xml
+  - text/xml
+produces:
+  - application/json
+  - application/xml
+  - text/xml
+  - application/javascript
+  - text/javascript
+paths:
+#  /user/{userId}/changes:
+  /changes:
+    get:
+      tags:
+        - Play
+      summary: Get changes since last synch.
+      operationId: getRemoteChanges
+      parameters: 
+        - name: userId
+          in: path
+          description: User id
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Play'
+      deprecated: false
+      
+#  /user/{userId}/plays:
+  /plays:
+    post:
+      tags:
+        - Play
+      summary: Create Play.
+      operationId: createPlay
+      parameters:
+        - name: userId
+          in: path
+          description: User id
+          required: true
+          type: integer
+          format: int64
+        - name: play
+          in: body
+          description: Play object
+          required: true
+          schema:
+            $ref: '#/definitions/Play'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Play'
+      deprecated: false
+    
+#  /user/{userId}/plays/{playId}:
+  /plays/{playId}:
+    put:
+      tags:
+        - Play
+      summary: Edit Play. 
+      operationId: editPlay
+      parameters: 
+        - name: userId
+          in: path
+          description: User id
+          required: true
+          type: integer
+          format: int64
+        - name: playId
+          in: path
+          description: Id of Play
+          required: true
+          type: integer
+          format: int64
+        - name: play
+          in: body
+          description: The edited Play object
+          required: true
+          schema:
+            $ref: '#/definitions/Play'
+      responses:
+        '200':
+          description: Request was successful
+          schema:
+            $ref: '#/definitions/Play'
+      deprecated: false
+      
+    delete:
+      tags:
+        - Play
+      summary: Delete Play.
+      operationId: deletePlay
+      parameters: 
+        - name: userId
+          in: path
+          description: User id
+          required: true
+          type: integer
+          format: int64
+        - name: playId
+          in: path
+          description: Play id
+          required: true
+          type: integer
+          format: int64
+      responses:
+#        '200':
+#          description: Request was successful
+#          schema:
+#            type: object
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Pet not found"
+      deprecated: false
+  
+#  /user/{userId}/games:
+#    post:
+#      tags:
+#        - Game
+#      summary: Create Game.
+#      operationId: createGame
+#      parameters: 
+#        - name: userId
+#          in: path
+#          description: User id
+#          required: true
+#          type: integer
+#          format: int64
+#        - name: game
+#          in: body
+#          description: Game object
+#          required: true
+#          schema:
+#            $ref: '#/definitions/Game'
+#      responses:
+#        '200':
+#          description: Request was successful
+#          schema:
+#            $ref: '#/definitions/Game'
+#      deprecated: false
+
+#  /user/{userId}/games/{gameId}:
+#    put:
+#      tags:
+#        - Game
+#      summary: Edit Game.
+#      operationId: editGame
+#      parameters: 
+#        - name: userId
+#          in: path
+#          description: User id
+#          required: true
+#          type: integer
+#          format: int64
+#        - name: gameId
+#          in: path
+#          description: Game id
+#          required: true
+#          type: integer
+#          format: int64
+#        - name: game
+#          in: body
+#          description: Game object
+#          required: true
+#          schema:
+#            $ref: '#/definitions/Game'
+#      responses:
+#        '200':
+#          description: Request was successful
+#          schema:
+#            $ref: '#/definitions/Game'
+#      deprecated: false
+
+#    delete:
+#      tags:
+#        - Game
+#      summary: Delete Game.
+#      operationId: deleteGame
+#      parameters: 
+#        - name: userId
+#          in: path
+#          description: User id
+#          required: true
+#          type: integer
+#          format: int64
+#        - name: gameId
+#          in: path
+#          description: Game id
+#          required: true
+#          type: integer
+#          format: int64
+#      responses:
+##        '200':
+##          description: Request was successful
+##          schema:
+##            type: object
+#        400:
+#          description: "Invalid ID supplied"
+#        404:
+#          description: "Pet not found"
+#      deprecated: false
+      
+definitions:
+#  User:
+#    properties:
+#      id:
+#        type: integer
+#        format: int64
+#      username:
+#        type: string
+#      password:
+#        type: string
+#    required:
+#      - id
+#      - username
+#      - password
+#    additionalProperties: false
+  Game:
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      plays:
+        type: array
+        items:
+          $ref: '#/definitions/Play'
+    required:
+      - id
+      - name
+     # TODO: Check the correction --> is circular reference a problem?
+     #- plays
+    additionalProperties: false
+  Play:
+    properties:
+      id:
+        type: integer
+        format: int64
+      date:
+        type: string
+        format: date
+      quantity:
+        type: integer
+      game:
+        $ref: '#/definitions/Game'
+    required: 
+      - id
+      - date
+      - quantity
+      - game
+    additionalProperties: false
+tags:
+  - name: Play
+#  - name: Game
