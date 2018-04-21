@@ -2,6 +2,7 @@ package hu.bme.aut.android.playcatalog.network;
 
 import java.util.List;
 
+import hu.bme.aut.android.playcatalog.model.Game;
 import hu.bme.aut.android.playcatalog.model.Play;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,34 +16,30 @@ public interface PlayCatalogApi {
     /**
      * Get changes since last synch.
      *
-     * @param userId User id
      * @return Call<List<Play>>
      */
 
     @GET("changes")
-    Call<List<Play>> getRemoteChanges(
-            @Path("userId") Long userId
-    );
+    Call<List<Play>> getRemoteChanges();
+
 
 
     /**
      * Create Play.
      *
-     * @param userId User id
      * @param play Play object
      * @return Call<Play>
      */
 
     @POST("plays")
     Call<Play> createPlay(
-            @Path("userId") Long userId, @Body Play play
+            @Body Play play
     );
 
 
     /**
      * Edit Play.
      *
-     * @param userId User id
      * @param playId Id of Play
      * @param play The edited Play object
      * @return Call<Play>
@@ -50,20 +47,31 @@ public interface PlayCatalogApi {
 
     @PUT("plays/{playId}")
     Call<Play> editPlay(
-            @Path("userId") Long userId, @Path("playId") Long playId, @Body Play play
+            @Path("playId") Long playId, @Body Play play
     );
 
 
     /**
      * Delete Play.
      *
-     * @param userId User id
      * @param playId Play id
      * @return Call<Void>
      */
 
     @DELETE("plays/{playId}")
     Call<Void> deletePlay(
-            @Path("userId") Long userId, @Path("playId") Long playId
+            @Path("playId") Long playId
+    );
+
+    /**
+     * Create Game.
+     *
+     * @param orderBy Order logic
+     * @return Call<Game>
+     */
+
+    @GET("games/{orderBy}")
+    Call<List<Game>> getGame(
+            @Path("orderBy") String orderBy
     );
 }
